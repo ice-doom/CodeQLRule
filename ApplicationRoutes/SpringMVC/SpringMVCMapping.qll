@@ -195,12 +195,12 @@ class MappingMethod extends Method{
                 and ((out.indexOf(";") > -1
                     and g2 = any(string aa | 
                         aa =  [out.splitAt("&")]
-                        | aa.regexpFind(b.substring(1, b.length() -1) + "_[a-zA-Z]+"  + "_Param"+ ";([;a-zA-Z0-9=_]+)", _, _)
+                        | aa.regexpFind(b.substring(1, b.length() -1) + "_[a-zA-Z]+" + "_Param"+ ";([;a-zA-Z0-9=_]+)", _, _)
                         )
                 ) or (not out.indexOf(";") > -1
                 and g2 = any(string aa | 
                     aa =  [out.splitAt("&")]
-                    | aa.regexpFind(b.substring(1, b.length() -1) + "_[a-zA-Z]+"  + "_Param", _, _)
+                    | aa.regexpFind(b.substring(1, b.length() -1) + "_[a-zA-Z]+" + "_Param", _, _)
                         )
                     ))
 
@@ -260,23 +260,22 @@ class MappingMethod extends Method{
                 // g2为：path2_Param;ee
                 exists(string newb, string g2, string c, string d1, string pp11, string out |
                     concat(string i| i in [gethandleMVNo(d)] | i.toString() , "&") = out
-                    // and paramType = pathVar.prefix(pathVar.indexOf("_"))
-
                     and pp11 = out.splitAt("&")
                     and newb = any(pp11.regexpFind("\\{([a-zA-Z0-9]+)\\}", _, _))
                     
                     and ((out.indexOf(";") > -1
-                            and g2 = any(string aa |  aa =  [out.splitAt("&")]
-                                | aa.regexpFind(newb.substring(1, newb.length() -1) + "_[a-zA-Z]+"  + "_Param"+ ";([;a-zA-Z0-9=_]+)", _, _)
-                                )
-                        ) or (not out.indexOf(";") > -1
-                            and g2 = any(string aa |  aa =  [out.splitAt("&")]
-                                | aa.regexpFind(newb.substring(1, newb.length() -1) + "_[a-zA-Z]+"  + "_Param", _, _)
-                                )
-                        )
-                    )
+                        and g2 = any(string aa | 
+                            aa =  [out.splitAt("&")]
+                            | aa.regexpFind(newb.substring(1, newb.length() -1) + "_[a-zA-Z]+"  + "_Param"+ ";([;a-zA-Z0-9=_]+)", _, _)
+                            )
+                    ) or (not out.indexOf(";") > -1
+                    and g2 = any(string aa | 
+                        aa =  [out.splitAt("&")]
+                        | aa.regexpFind(newb.substring(1, newb.length() -1) + "_[a-zA-Z]+" + "_Param", _, _)
+                            )
+                        ))
 
-                    and c = pp11.regexpFind("\\{([a-zA-Z0-9]+)\\}", _, _)
+                    and c = pp11.regexpFind("\\{([a-zA-Z0-9_]+)\\}", _, _)
                     and c = "{" + g2.substring(0, c.length()-2) + "}"
                     and d1 = pp11.replaceAll(c, g2)
                     and result = d1
@@ -291,11 +290,11 @@ class MappingMethod extends Method{
     // TODO：pathVar为空情况可能存在value或者name，需要处理下该情况
     bindingset[pathstring, pathVar]
     string getMatrixVariableParam(string pathstring, string pathVar){
-        exists(Parameter p, Method m, string pathName| 
-            m = this
-            and p = m.getAParameter()
+        exists(Parameter p, Method m, string pathName | 
+            m = this and 
+            p = m.getAParameter()
             and pathName = pathVar.prefix(pathVar.indexOf("_"))
-            and if p.getAnAnnotation().toString() = "MatrixVariable"
+            and if m.getAParameter().getAnAnnotation().toString() = "MatrixVariable"
             then
                 // 使用MatrixVariable注解，pathVar和传入的pathVar匹配
                 (exists(Expr e, Annotation annotation | 
@@ -305,7 +304,6 @@ class MappingMethod extends Method{
                     and ((e = p.getAnAnnotation().getValue(["value", "name"])
                         and e.toString() != "\"\""
                         and result = pathstring.replaceAll("{" + pathName + "}", pathVar + "_Param" + ";" + e.(CompileTimeConstantExpr).getStringValue() + "_" + p.getType().getName() + "=" + stringParamValue(p.getType()))
-                    
                     ) or (result = pathstring.replaceAll("{" + pathName + "}", pathVar + "_Param" + ";" +  p.toString() + "_" + p.getType().getName() + "=" + stringParamValue(p.getType()))
                         and annotation = p.getAnAnnotation()
                         and annotation.toString() = "MatrixVariable"
@@ -328,7 +326,7 @@ class MappingMethod extends Method{
                 )
             else
                 // 不存在MatrixVariable注解时，{}占位的路径名添加_Param标记
-                result = pathstring.replaceAll("{" + pathVar + "}", pathVar + "_Param")
+                result = pathstring.replaceAll("{" + pathName + "}", pathVar + "_Param")
         )
     }
 
@@ -336,13 +334,12 @@ class MappingMethod extends Method{
      * 获取当前方法对应的映射路径
     */
     string getMethodMappedPath(){
-        // this.hasName("pathVars") and
         exists(Annotation a, Parameter p, string pathstring | 
             a = getAnAnnotation() and a.getType() instanceof SpringRequestMappingAnnotationType
             and pathstring = a.getValue(["value","path"]).(CompileTimeConstantExpr).getStringValue() 
             and if pathstring.indexOf("{") > -1
             then
-                exists(string pathVar | 
+                exists(string pathVar |  
                     p = this.getAParameter()
                     and p.getAnAnnotation().toString() = "PathVariable"
                     and pathVar = p.toString() + "_" + p.getType().getName()
@@ -949,10 +946,3 @@ class SpringMVCMapping extends string{
 
 
 }
-
-
-
-
-
-
-
