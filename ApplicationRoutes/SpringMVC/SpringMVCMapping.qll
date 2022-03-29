@@ -735,17 +735,26 @@ class SpringMVCMapping extends string{
                     )
                 )
             else (
-
+                    // 1、参数要都没有MatrixVariable、PathVariable、RequestParam等注解
+                    // 2、参数没有任何注解
+                    // 3、参数有RequestParam注解，但是value为空，即没有设置
+                    // 以上3种情况会为参数处理获取对应类型的默认值
                     (   (
                             not p.hasAnnotation("org.springframework.web.bind.annotation", "MatrixVariable")
                             and not p.hasAnnotation("org.springframework.web.bind.annotation", "PathVariable")
                             and not p.hasAnnotation("org.springframework.web.bind.annotation", "RequestAttribute")
                             and not p.hasAnnotation("org.springframework.web.bind.annotation", "RequestHeader")
                             and not p.hasAnnotation("org.springframework.web.bind.annotation", "CookieValue")
+                            and not p.hasAnnotation("org.springframework.web.bind.annotation", "RequestParam")
                         )
                         or not p.hasAnnotation()
+                        or exists(Annotation a| p.hasAnnotation("org.springframework.web.bind.annotation", "RequestParam")
+                            and a = p.getAnAnnotation()
+                            and a.getType().hasQualifiedName("org.springframework.web.bind.annotation", "RequestParam")
+                            and a.getValue("value").toString() = "\"\""
+                            )
                     )
-
+                    // 调用根据不同情况分别调用paramParse、paramDateListParse、paramParseNoRequestParam谓词
                     and (result = paramParse(p.getType(), p.toString())
                         or (result = paramParse(p.getType().(ParameterizedType).getTypeArgument(0), p.toString())
                             and p.getType().(RefType).getAnAncestor().getSourceDeclaration().hasQualifiedName("org.springframework.http", "HttpEntity")
@@ -939,7 +948,7 @@ class SpringMVCMapping extends string{
     string getUrl(Method method){
         exists(SpringRequestMappingMethod m | 
             method = m and
-            result = getMethodType(m) + " " + getPath(m) + getParam(m) + " " + getContentType(m)
+            result = getMethodType(m) + "  " + getPath(m) + getParam(m) + "  " + getContentType(m)
             )
     }
 
