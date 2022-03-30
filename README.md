@@ -7,7 +7,35 @@
 
 ### SpringMVC
 
+相关细节可以阅读：[CodeQL 提升篇之路由收集](https://tttang.com/archive/1512/)
+
 ![SpringMVC](https://user-images.githubusercontent.com/25363717/160372489-33bd5928-9d4a-4e6d-a42f-74aec3e24e0d.png)
+
+#### 脚本处理
+
+```py
+$ python SpringMVCMapping.py -h
+usage: SpringMVCMapping.py [-h] [-r REQ] [-f FILE] [-p PROXY] [-a {0,1}]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -r REQ, --req REQ     输入请求目标地址，默认为http://127.0.0.1
+  -f FILE, --file FILE  存放路由的文件名，文件需存放在脚本相同目录中
+  -p PROXY, --proxy PROXY
+                        输入请求代理地址
+  -a {0,1}, --action {0,1}
+                        0表示保存文件默认生成在当前目录中，1表示直接发送请求。默认为0
+
+Example:
+python3 SpringMVCMapping.py -r http://sample/ -f route.txt -a 0
+python3 SpringMVCMapping.py -r http://sample/ -f route.txt -a 1
+python3 SpringMVCMapping.py -r http://sample/ -p http://127.0.0.1:8080  -f route.txt -a 1
+```
+
+选择保存在本地则会生成以**host+\_RoutesSave\_+时间戳**命名的文本
+![image](https://user-images.githubusercontent.com/25363717/160879538-b1c8dac1-f122-41e9-aa1a-432ec3a253c3.png)
+
+
 
 #### TODO
 
