@@ -27,9 +27,9 @@ optional arguments:
                         0表示保存文件默认生成在当前目录中，1表示直接发送请求。默认为0
 
 Example:
-python3 SpringMVCMapping.py -r http://sample/ -f route.txt -a 0
-python3 SpringMVCMapping.py -r http://sample/ -f route.txt -a 1
-python3 SpringMVCMapping.py -r http://sample/ -p http://127.0.0.1:8080  -f route.txt -a 1
+python3 SpringMVCMapping.py -r http://sample.com/ -f route.txt -a 0
+python3 SpringMVCMapping.py -r http://sample.com/ -f route.txt -a 1
+python3 SpringMVCMapping.py -r http://sample.com/ -p http://127.0.0.1:8080 -f route.txt -a 1
 ```
 
 选择保存在本地则会生成以**host+\_RoutesSave\_+时间戳**命名的文本
