@@ -11,6 +11,7 @@
 
 #### TODO
 
+- [ ] python工具脚本完成：codeql查询结果再进行处理包括本地保存处理后的内容、自动发送请求至目标
 - [ ] `Mapping`注解中使用`headers`表示需要带上的header头
 - [ ] `GetMapping`注解中使用`produces`表示Context-Type类型，可能需要添加该项
 - [ ] `Mapping`注解中设置了`params`表示需要带上的参数名，可以没有值
