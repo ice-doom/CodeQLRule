@@ -1,0 +1,86 @@
+GET  /async/callable/response-body  
+GET  /async/callable/view  
+GET  /async/callable/exception?handled_boolean=true  
+GET  /async/callable/custom-timeout-handling  
+GET  /async/deferred-result/response-body  
+GET  /async/deferred-result/model-and-view  
+GET  /async/deferred-result/exception  
+GET  /async/deferred-result/timeout-value  
+GET  /convert/primitive?value_Integer=0  
+GET  /convert/date/value_Date_Param  
+GET  /convert/collection  
+GET  /convert/formattedCollection  
+GET  /convert/bean?date_Date=2022-11-11 11:11:11&formattedList_List_Date=2022-11-11 11:11:11&list_List_Integer=0&map_Map[0]_String=test&masked_String=test&primitive_Integer=0  
+GET  /convert/value?value_String=test  
+GET  /convert/custom?value_String=test  
+GET  /data/param?foo_String=test  
+GET  /data/group?param1_String=test&param2_String=test&param3_String=test  
+GET  /data/path/var_String_Param  
+GET  /data/path_String_Param;foo_String=test/simple  
+GET  /data/path1_String_Param;foo_String=test/path2_String_Param;foo_String=test  
+GET  /data/header  
+GET  /data/cookie  
+POST  /data/body?body_String=test  Content-Type: application/json
+POST  /data/entity?entity_String=test  Content-Type: application/x-www-form-urlcoded
+GET  /data/custom?foo_String=test  
+GET  /data/standard/request  
+POST  /data/standard/request/reader?ParamIsRandom_Reader=test  Content-Type: application/x-www-form-urlcoded
+POST  /data/standard/request/is?ParamIsRandom_InputStream=test  Content-Type: application/x-www-form-urlcoded
+GET  /data/standard/response  
+GET  /data/standard/response/writer  
+GET  /data/standard/response/os  
+GET  /data/standard/session  
+GET  /exception  
+GET  /global-exception  
+GET  /fileupload/  
+POST  /fileupload/?file_Multipart=filename.jpg  Content-Type: application/x-www-form-urlcoded
+GET  /form/  
+POST  /form/?additionalInfo_Map[test]_String=test&age_int=0&ajaxRequest_boolean=true&birthDate_Date=2022-11-11 11:11:11&currency_BigDecimal=0&inquiryDetails_String=test&inquiry_Enum=comment/feedback/suggestion&name_String=test&percent_BigDecimal=0&phone_String=test&subscribeNewsletter_boolean=true  Content-Type: application/x-www-form-urlcoded
+GET  /class-mapping/*/path  
+GET  /class-mapping/*/path/*  
+GET  /class-mapping/*/method  
+GET  /class-mapping/*/parameter  
+GET  /class-mapping/*/header  
+GET  /class-mapping/*/notheader  
+POST  /class-mapping/*/consumes?foo_String=test&fruit_String=test  Content-Type: application/json
+GET  /class-mapping/*/produces  
+GET  /mapping/path  
+GET  /mapping/path/*  
+GET  /mapping/method  
+GET  /mapping/parameter  
+GET  /mapping/header  
+POST  /mapping/consumes?foo_String=test&fruit_String=test  Content-Type: application/json
+GET  /mapping/produces  
+POST  /messageconverters/string?string_String=test  Content-Type: application/json
+GET  /messageconverters/string  
+POST  /messageconverters/form?foo_String=test&fruit_String=test  Content-Type: application/x-www-form-urlcoded
+GET  /messageconverters/form  
+POST  /messageconverters/xml?foo_String=test&fruit_String=test  Content-Type: application/json
+GET  /messageconverters/xml  
+POST  /messageconverters/json?foo_String=test&fruit_String=test  Content-Type: application/json
+GET  /messageconverters/json  
+POST  /messageconverters/atom?title_String=test  Content-Type: application/json
+GET  /messageconverters/atom  
+POST  /messageconverters/rss?title_String=test  Content-Type: application/json
+GET  /messageconverters/rss  
+POST  /re?ParamIsRandom_InputStream=test  Content-Type: application/x-www-form-urlcoded
+POST  /entity?host_String=test&newshop_String=test&scheme_String=test&userInfo_String=test  Content-Type: application/x-www-form-urlcoded
+GET/POST  /entity3?host_String=test&newshop_String=test&scheme_String=test&userInfo_String=test&config_id_String=test&config_name_String=test&ParamIsRandom_InputStream=test&config_ischeckbox_String=test&config_ispaginationnew66_String=test&new77config_istree_String=test&new88config_istreenew99_String=test&newtest_String=test  Content-Type: application/x-www-form-urlcoded
+GET  /entity4/path1_Integer_Param;bb_String=test/path2_StringBuffer_Param;ee_String=test/path3_String_Param  
+POST  /entity4/path1?foo_String=test&fruit_String=test  Content-Type: application/json&Content-Type: application/xml
+GET  /redirect/uriTemplate  
+GET  /redirect/uriComponentsBuilder  
+GET  /redirect/account_String_Param  
+GET  /response/annotation  
+GET  /response/charset/accept  
+GET  /response/charset/produce  
+GET  /response/entity/status  
+GET  /response/entity/headers  
+GET  /simple  
+POST  /hh?name_String=test  Content-Type: application/x-www-form-urlcoded
+GET  /simple/revisited  
+GET  /validate?date_Date=2022-11-11 11:11:11&number_Integer=0  
+GET  /views/*/html  
+GET  /views/*/viewName  
+GET  /views/*/pathVariables/foo_String_Param/fruit_String_Param  
+GET  /views/*/?foo_String=test&fruit_String=test  
